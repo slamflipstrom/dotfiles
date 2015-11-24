@@ -9,19 +9,24 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround' "Quoting/parenthesizing made simple
 Plugin 'tpope/vim-commentary' "Commenting plugin
 Plugin 'tpope/vim-unimpaired' "Pairs of handy bracket mappings
 Plugin 'tpope/vim-repeat' "enable repeating supported plugin maps with '.'
+Plugin 'tpope/vim-fugitive' "Git Tool
 Plugin 'bling/vim-airline' "Status bar customization
 Plugin 'ctrlpvim/ctrlp.vim' " Fuzzy search plugin
 Plugin 'rking/ag.vim' "Ag search utility
 Plugin 'https://github.com/scrooloose/nerdtree.git' " NERDTree file explorer plugin
-Plugin 'scrooloose/syntastic' "Syntax checking plugin
-"Plugin 'thoughtbot/vim-rspec' "Rspec for VIM, https://robots.thoughtbot.com/running-specs-from-vim
+Plugin 'Townk/vim-autoclose' "Enable auto-close chars feature '([{'.
+Plugin 'gregsexton/MatchTag' "Highlights matching HTML tags
 
+"Language Specific Plugins
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'scrooloose/syntastic' "Syntax checker/linter
+Plugin 'dsawardekar/ember.vim' "Ember plugin 
+Plugin 'elixir-lang/vim-elixir' "Elixir plugin
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,10 +57,11 @@ let mapleader = "\<Space>"
 nmap <leader>vi :tabe $MYVIMRC<CR>
 
 "refresh .vimrc settings
-nmap <leader>r :source $MYVIMRC<CR>
+nmap <leader>so :source $MYVIMRC<CR>
 
 " opens NERDTree w/ Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
+nmap <leader>k :NERDTreeToggle<CR>
 
 " Get to NORMAL mode with 'jj'
 :imap jj <Esc>
@@ -71,7 +77,10 @@ nmap 0 ^
 nmap <leader>q :ccl<CR>
 
 " Pre-populate a split command with the current directory
-nmap <leader>v :vnew <C-r>=escape(expand("%:p:h"), ' ') . '/'<cr>
+nmap <leader>vj :vnew <C-r>=escape(expand("%:p:h"), ' ') . '/'<cr>
+
+"Vertical Split command without directory
+nmap <leader>v :vnew<CR>
 
 "Open new tab and search for something
 nmap <leader>a :tab split<CR>:Ag ""<Left>
@@ -156,6 +165,21 @@ filetype indent on
 " Set to auto read when a file is changed from the outside
 set autoread
 
+"Rename file function from Gary Bernhardt
+"1. <leader>r
+"2. correct filename
+"3. press enter
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>r :call RenameFile()<cr>
+
 " => VIM user interface
 " Set 7 lines to the cursor - when moving vertically using j/k
 " set so=7
@@ -224,6 +248,9 @@ if has('gui_running')
 else
    colorscheme lapis256
 endif
+
+ "Highlights matching text objects ex. {},(),'',
+hi MatchParen guibg=NONE guifg=cyan gui=bold
 
 hi clear CursorLineNR "clears highlighting of cursor line number
 set encoding=utf8 " Set utf8 as standard encoding and en_US as the standard language
