@@ -1,0 +1,26 @@
+{
+  "workbench.colorTheme": "Min Dark",
+  "editor.minimap.enabled": false,
+  "materialTheme.cache.workbench.settings": {
+    "themeColours": "Palenight High Contrast",
+    "accent": "Yellow",
+    "accentPrevious": "Orange"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "materialTheme.fixIconsRunning": false,
+  "workbench.iconTheme": "vs-seti",
+  "editor.tokenColorCustomizations": {
+    "color": "blue"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.enablePreview": false,
+  "window.titleBarStyle": "native",
+  "window.zoomLevel": 0,
+  "vsicons.dontShowNewVersionMessage": true,
+  "editor.fontFamily": "Dank Mono, Source Code Pro, Gintronic, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.fontWeight": "600",
+  "workbench.colorCustomizations": {}
+}
